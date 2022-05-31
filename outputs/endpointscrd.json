@@ -1,0 +1,506 @@
+Name:         ciliumendpoints.cilium.io
+Namespace:    
+Labels:       io.cilium.k8s.crd.schema.version=1.24.3
+Annotations:  <none>
+API Version:  apiextensions.k8s.io/v1
+Kind:         CustomResourceDefinition
+Metadata:
+  Creation Timestamp:  2022-05-31T15:28:24Z
+  Generation:          1
+  Managed Fields:
+    API Version:  apiextensions.k8s.io/v1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:labels:
+          .:
+          f:io.cilium.k8s.crd.schema.version:
+      f:spec:
+        f:conversion:
+          .:
+          f:strategy:
+        f:group:
+        f:names:
+          f:kind:
+          f:listKind:
+          f:plural:
+          f:shortNames:
+          f:singular:
+        f:scope:
+        f:versions:
+    Manager:      cilium-operator-generic
+    Operation:    Update
+    Time:         2022-05-31T15:28:24Z
+    API Version:  apiextensions.k8s.io/v1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:status:
+        f:acceptedNames:
+          f:kind:
+          f:listKind:
+          f:plural:
+          f:shortNames:
+          f:singular:
+        f:conditions:
+          k:{"type":"Established"}:
+            .:
+            f:lastTransitionTime:
+            f:message:
+            f:reason:
+            f:status:
+            f:type:
+          k:{"type":"NamesAccepted"}:
+            .:
+            f:lastTransitionTime:
+            f:message:
+            f:reason:
+            f:status:
+            f:type:
+    Manager:         kube-apiserver
+    Operation:       Update
+    Time:            2022-05-31T15:28:25Z
+  Resource Version:  659
+  UID:               79e8c8fa-d967-44ba-9155-a36eebf938e0
+Spec:
+  Conversion:
+    Strategy:  None
+  Group:       cilium.io
+  Names:
+    Kind:       CiliumEndpoint
+    List Kind:  CiliumEndpointList
+    Plural:     ciliumendpoints
+    Short Names:
+      cep
+      ciliumep
+    Singular:  ciliumendpoint
+  Scope:       Namespaced
+  Versions:
+    Additional Printer Columns:
+      Description:  Cilium endpoint id
+      Json Path:    .status.id
+      Name:         Endpoint ID
+      Type:         integer
+      Description:  Cilium identity id
+      Json Path:    .status.identity.id
+      Name:         Identity ID
+      Type:         integer
+      Description:  Ingress enforcement in the endpoint
+      Json Path:    .status.policy.ingress.enforcing
+      Name:         Ingress Enforcement
+      Type:         boolean
+      Description:  Egress enforcement in the endpoint
+      Json Path:    .status.policy.egress.enforcing
+      Name:         Egress Enforcement
+      Type:         boolean
+      Description:  Status of visibility policy in the endpoint
+      Json Path:    .status.visibility-policy-status
+      Name:         Visibility Policy
+      Type:         string
+      Description:  Endpoint current state
+      Json Path:    .status.state
+      Name:         Endpoint State
+      Type:         string
+      Description:  Endpoint IPv4 address
+      Json Path:    .status.networking.addressing[0].ipv4
+      Name:         IPv4
+      Type:         string
+      Description:  Endpoint IPv6 address
+      Json Path:    .status.networking.addressing[0].ipv6
+      Name:         IPv6
+      Type:         string
+    Name:           v2
+    Schema:
+      openAPIV3Schema:
+        Description:  CiliumEndpoint is the status of a Cilium policy rule.
+        Properties:
+          API Version:
+            Description:  APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            Type:         string
+          Kind:
+            Description:  Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            Type:         string
+          Metadata:
+            Type:  object
+          Status:
+            Description:  EndpointStatus is the status of a Cilium endpoint.
+            Properties:
+              Controllers:
+                Description:  Controllers is the list of failing controllers for this endpoint.
+                Items:
+                  Description:  ControllerStatus is the status of a failing controller.
+                  Properties:
+                    Configuration:
+                      Description:  Configuration is the controller configuration
+                      Properties:
+                        Error - Retry:
+                          Description:  Retry on error
+                          Type:         boolean
+                        Error - Retry - Base:
+                          Description:  Base error retry back-off time Format: duration
+                          Format:       int64
+                          Type:         integer
+                        Interval:
+                          Description:  Regular synchronization interval Format: duration
+                          Format:       int64
+                          Type:         integer
+                      Type:             object
+                    Name:
+                      Description:  Name is the name of the controller
+                      Type:         string
+                    Status:
+                      Description:  Status is the status of the controller
+                      Properties:
+                        Consecutive - Failure - Count:
+                          Format:  int64
+                          Type:    integer
+                        Failure - Count:
+                          Format:  int64
+                          Type:    integer
+                        Last - Failure - Msg:
+                          Type:  string
+                        Last - Failure - Timestamp:
+                          Type:  string
+                        Last - Success - Timestamp:
+                          Type:  string
+                        Success - Count:
+                          Format:  int64
+                          Type:    integer
+                      Type:        object
+                    Uuid:
+                      Description:  UUID is the UUID of the controller
+                      Type:         string
+                  Type:             object
+                Type:               array
+              Encryption:
+                Description:  Encryption is the encryption configuration of the node
+                Properties:
+                  Key:
+                    Description:  Key is the index to the key to use for encryption or 0 if encryption is disabled.
+                    Type:         integer
+                Type:             object
+              External - Identifiers:
+                Description:  ExternalIdentifiers is a set of identifiers to identify the endpoint apart from the pod name. This includes container runtime IDs.
+                Properties:
+                  Container - Id:
+                    Description:  ID assigned by container runtime
+                    Type:         string
+                  Container - Name:
+                    Description:  Name assigned to container
+                    Type:         string
+                  Docker - Endpoint - Id:
+                    Description:  Docker endpoint ID
+                    Type:         string
+                  Docker - Network - Id:
+                    Description:  Docker network ID
+                    Type:         string
+                  k8s-namespace:
+                    Description:  K8s namespace for this endpoint
+                    Type:         string
+                  k8s-pod-name:
+                    Description:  K8s pod name for this endpoint
+                    Type:         string
+                  Pod - Name:
+                    Description:  K8s pod for this endpoint(Deprecated, use K8sPodName and K8sNamespace instead)
+                    Type:         string
+                Type:             object
+              Health:
+                Description:  Health is the overall endpoint & subcomponent health.
+                Properties:
+                  Bpf:
+                    Description:  bpf
+                    Type:         string
+                  Connected:
+                    Description:  Is this endpoint reachable
+                    Type:         boolean
+                  Overall Health:
+                    Description:  overall health
+                    Type:         string
+                  Policy:
+                    Description:  policy
+                    Type:         string
+                Type:             object
+              Id:
+                Description:  ID is the cilium-agent-local ID of the endpoint.
+                Format:       int64
+                Type:         integer
+              Identity:
+                Description:  Identity is the security identity associated with the endpoint
+                Properties:
+                  Id:
+                    Description:  ID is the numeric identity of the endpoint
+                    Format:       int64
+                    Type:         integer
+                  Labels:
+                    Description:  Labels is the list of labels associated with the identity
+                    Items:
+                      Type:  string
+                    Type:    array
+                Type:        object
+              Log:
+                Description:  Log is the list of the last few warning and error log entries
+                Items:
+                  Description:  EndpointStatusChange Indication of a change of status 
+ swagger:model EndpointStatusChange
+                  Properties:
+                    Code:
+                      Description:  Code indicate type of status change Enum: [ok failed]
+                      Type:         string
+                    Message:
+                      Description:  Status message
+                      Type:         string
+                    State:
+                      Description:  state
+                      Type:         string
+                    Timestamp:
+                      Description:  Timestamp when status change occurred
+                      Type:         string
+                  Type:             object
+                Type:               array
+              Named - Ports:
+                Description:  NamedPorts List of named Layer 4 port and protocol pairs which will be used in Network Policy specs. 
+ swagger:model NamedPorts
+                Items:
+                  Description:  Port Layer 4 port / protocol pair 
+ swagger:model Port
+                  Properties:
+                    Name:
+                      Description:  Optional layer 4 port name
+                      Type:         string
+                    Port:
+                      Description:  Layer 4 port number
+                      Type:         integer
+                    Protocol:
+                      Description:  Layer 4 protocol Enum: [TCP UDP ICMP ICMPV6 ANY]
+                      Type:         string
+                  Type:             object
+                Type:               array
+              Networking:
+                Description:  Networking is the networking properties of the endpoint.
+                Properties:
+                  Addressing:
+                    Description:  IP4/6 addresses assigned to this Endpoint
+                    Items:
+                      Description:  AddressPair is is a par of IPv4 and/or IPv6 address.
+                      Properties:
+                        ipv4:
+                          Type:  string
+                        ipv6:
+                          Type:  string
+                      Type:      object
+                    Type:        array
+                  Node:
+                    Description:  NodeIP is the IP of the node the endpoint is running on. The IP must be reachable between nodes.
+                    Type:         string
+                Required:
+                  addressing
+                Type:  object
+              Policy:
+                Description:  EndpointPolicy represents the endpoint's policy by listing all allowed ingress and egress identities in combination with L4 port and protocol.
+                Properties:
+                  Egress:
+                    Description:  EndpointPolicyDirection is the list of allowed identities per direction.
+                    Properties:
+                      Adding:
+                        Description:  Deprecated
+                        Items:
+                          Description:  IdentityTuple specifies a peer by identity, destination port and protocol.
+                          Properties:
+                            Dest - Port:
+                              Type:  integer
+                            Identity:
+                              Format:  int64
+                              Type:    integer
+                            Identity - Labels:
+                              Additional Properties:
+                                Type:  string
+                              Type:    object
+                            Protocol:
+                              Type:  integer
+                          Type:      object
+                        Type:        array
+                      Allowed:
+                        Description:  AllowedIdentityList is a list of IdentityTuples that species peers that are allowed.
+                        Items:
+                          Description:  IdentityTuple specifies a peer by identity, destination port and protocol.
+                          Properties:
+                            Dest - Port:
+                              Type:  integer
+                            Identity:
+                              Format:  int64
+                              Type:    integer
+                            Identity - Labels:
+                              Additional Properties:
+                                Type:  string
+                              Type:    object
+                            Protocol:
+                              Type:  integer
+                          Type:      object
+                        Type:        array
+                      Denied:
+                        Description:  DenyIdentityList is a list of IdentityTuples that species peers that are denied.
+                        Items:
+                          Description:  IdentityTuple specifies a peer by identity, destination port and protocol.
+                          Properties:
+                            Dest - Port:
+                              Type:  integer
+                            Identity:
+                              Format:  int64
+                              Type:    integer
+                            Identity - Labels:
+                              Additional Properties:
+                                Type:  string
+                              Type:    object
+                            Protocol:
+                              Type:  integer
+                          Type:      object
+                        Type:        array
+                      Enforcing:
+                        Type:  boolean
+                      Removing:
+                        Description:  Deprecated
+                        Items:
+                          Description:  IdentityTuple specifies a peer by identity, destination port and protocol.
+                          Properties:
+                            Dest - Port:
+                              Type:  integer
+                            Identity:
+                              Format:  int64
+                              Type:    integer
+                            Identity - Labels:
+                              Additional Properties:
+                                Type:  string
+                              Type:    object
+                            Protocol:
+                              Type:  integer
+                          Type:      object
+                        Type:        array
+                    Required:
+                      enforcing
+                    Type:  object
+                  Ingress:
+                    Description:  EndpointPolicyDirection is the list of allowed identities per direction.
+                    Properties:
+                      Adding:
+                        Description:  Deprecated
+                        Items:
+                          Description:  IdentityTuple specifies a peer by identity, destination port and protocol.
+                          Properties:
+                            Dest - Port:
+                              Type:  integer
+                            Identity:
+                              Format:  int64
+                              Type:    integer
+                            Identity - Labels:
+                              Additional Properties:
+                                Type:  string
+                              Type:    object
+                            Protocol:
+                              Type:  integer
+                          Type:      object
+                        Type:        array
+                      Allowed:
+                        Description:  AllowedIdentityList is a list of IdentityTuples that species peers that are allowed.
+                        Items:
+                          Description:  IdentityTuple specifies a peer by identity, destination port and protocol.
+                          Properties:
+                            Dest - Port:
+                              Type:  integer
+                            Identity:
+                              Format:  int64
+                              Type:    integer
+                            Identity - Labels:
+                              Additional Properties:
+                                Type:  string
+                              Type:    object
+                            Protocol:
+                              Type:  integer
+                          Type:      object
+                        Type:        array
+                      Denied:
+                        Description:  DenyIdentityList is a list of IdentityTuples that species peers that are denied.
+                        Items:
+                          Description:  IdentityTuple specifies a peer by identity, destination port and protocol.
+                          Properties:
+                            Dest - Port:
+                              Type:  integer
+                            Identity:
+                              Format:  int64
+                              Type:    integer
+                            Identity - Labels:
+                              Additional Properties:
+                                Type:  string
+                              Type:    object
+                            Protocol:
+                              Type:  integer
+                          Type:      object
+                        Type:        array
+                      Enforcing:
+                        Type:  boolean
+                      Removing:
+                        Description:  Deprecated
+                        Items:
+                          Description:  IdentityTuple specifies a peer by identity, destination port and protocol.
+                          Properties:
+                            Dest - Port:
+                              Type:  integer
+                            Identity:
+                              Format:  int64
+                              Type:    integer
+                            Identity - Labels:
+                              Additional Properties:
+                                Type:  string
+                              Type:    object
+                            Protocol:
+                              Type:  integer
+                          Type:      object
+                        Type:        array
+                    Required:
+                      enforcing
+                    Type:  object
+                Type:      object
+              State:
+                Description:  State is the state of the endpoint.
+                Enum:
+                  creating
+                  waiting-for-identity
+                  not-ready
+                  waiting-to-regenerate
+                  regenerating
+                  restoring
+                  ready
+                  disconnecting
+                  disconnected
+                  invalid
+                Type:  string
+              Visibility - Policy - Status:
+                Type:  string
+            Type:      object
+        Required:
+          metadata
+        Type:  object
+    Served:    true
+    Storage:   true
+    Subresources:
+Status:
+  Accepted Names:
+    Kind:       CiliumEndpoint
+    List Kind:  CiliumEndpointList
+    Plural:     ciliumendpoints
+    Short Names:
+      cep
+      ciliumep
+    Singular:  ciliumendpoint
+  Conditions:
+    Last Transition Time:  2022-05-31T15:28:25Z
+    Message:               no conflicts found
+    Reason:                NoConflicts
+    Status:                True
+    Type:                  NamesAccepted
+    Last Transition Time:  2022-05-31T15:28:25Z
+    Message:               the initial names have been accepted
+    Reason:                InitialNamesAccepted
+    Status:                True
+    Type:                  Established
+  Stored Versions:
+    v2
+Events:  <none>
